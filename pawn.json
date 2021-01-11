@@ -1,0 +1,9 @@
+{
+	"user": "bwhitmire55",
+	"repo": "samp-snapshots",
+	"entry": "test.pwn",
+	"output": "test.amx",
+	"dependencies": [
+		"sampctl/samp-stdlib"
+	]
+}
