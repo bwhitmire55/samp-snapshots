@@ -70,7 +70,31 @@ stock Snapshot_Destroy(id);
 
 ## Callbacks
 
+```pawn
+/*
+PARAMS:
+    playerid    - The player ID who attempted a snapshot (took a picture with a camera)
+*/
+public Snapshot_OnPlayerAttempt(playerid);
+```
 
+```pawn
+/*
+PARAMS:
+    playerid    - The player ID who hit a snapshot
+    snapshotid  - The snapshot hit
+*/
+public Snapshot_OnPlayerHit(playerid, snapshotid);
+```
+
+## Macros
+
+```pawn
+// Maximum number of snapshots
+#if !defined SNAPSHOT_MAX_SNAPSHOTS
+    #define SNAPSHOT_MAX_SNAPSHOTS      (10)
+#endif
+```
 
 ## Testing
 
