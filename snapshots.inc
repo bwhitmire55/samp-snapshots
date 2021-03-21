@@ -39,7 +39,7 @@ stock Snapshot_Create(Float: x, Float: y, Float: z) {
     gSnapshot_Data[idx][eSnapshot_Y] = y;
     gSnapshot_Data[idx][eSnapshot_Z] = z;
     gSnapshot_Data[idx][eSnapshot_Object] = CreateObject(SNAPSHOT_OBJECTID, x, y, z, 0.0, 0.0, 0.0, 0.0);
-    return 1;
+    return idx;
 }
 
 stock Snapshot_Destroy(id) {

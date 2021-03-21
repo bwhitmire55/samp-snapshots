@@ -52,7 +52,7 @@ PARAMS:
     Float: z    - z coordinate of snapshot
 
 RETURNS:
-    1 on success, otherwise 0
+    Snapshot ID on success, otherwise 0
 */
 stock Snapshot_Create(Float: x, Float: y, Float: z);
 ```
