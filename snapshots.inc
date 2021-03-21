@@ -19,37 +19,20 @@
 #define SNAPSHOT_INVALID    (-1)
 #define SNAPSHOT_OBJECTID   (1253)
 
-enum eSnapshot_data {
-    bool: eSnapshot_Created,
-    Float: eSnapshot_X,
-    Float: eSnapshot_Y,
-    Float: eSnapshot_Z,
-    eSnapshot_Object
-};
-
-static gSnapshot_Data[SNAPSHOT_MAX_SNAPSHOTS][eSnapshot_data];
+static gSnapshot_Object[SNAPSHOT_MAX_SNAPSHOTS];
 
 stock Snapshot_Create(Float: x, Float: y, Float: z) {
     new idx = GetEmptySlot();
     if(idx == SNAPSHOT_INVALID)
         return 0;
 
-    gSnapshot_Data[idx][eSnapshot_Created] = true;
-    gSnapshot_Data[idx][eSnapshot_X] = x;
-    gSnapshot_Data[idx][eSnapshot_Y] = y;
-    gSnapshot_Data[idx][eSnapshot_Z] = z;
-    gSnapshot_Data[idx][eSnapshot_Object] = CreateObject(SNAPSHOT_OBJECTID, x, y, z, 0.0, 0.0, 0.0, 0.0);
+    gSnapshot_Object[idx] = CreateObject(SNAPSHOT_OBJECTID, x, y, z, 0.0, 0.0, 0.0, 0.0);
     return idx;
 }
 
 stock Snapshot_Destroy(id) {
-    if((0 < id < SNAPSHOT_MAX_SNAPSHOTS) && gSnapshot_Data[id][eSnapshot_Created]) {
-        gSnapshot_Data[id][eSnapshot_Created] = false;
-
-        if(gSnapshot_Data[id][eSnapshot_Object]) {
-            DestroyObject(gSnapshot_Data[id][eSnapshot_Object]);
-            gSnapshot_Data[id][eSnapshot_Object] = 0;
-        }
+    if((0 < id < SNAPSHOT_MAX_SNAPSHOTS) && gSnapshot_Object[id] != 0) {
+        DestroyObject(gSnapshot_Object[id]);
         return 1;
     }
     return 0;
@@ -57,7 +40,7 @@ stock Snapshot_Destroy(id) {
 
 static GetEmptySlot() {
     for(new i = 0; i < SNAPSHOT_MAX_SNAPSHOTS; i++) {
-        if(!gSnapshot_Data[i][eSnapshot_Created]) {
+        if(!gSnapshot_Object[i]) {
             return i;
         }
     }
@@ -84,7 +67,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
             new object = GetPlayerCameraTargetObject(playerid);
             if(object != INVALID_OBJECT_ID) {
                 for(new i = 0; i < SNAPSHOT_MAX_SNAPSHOTS; i++) {
-                    if(gSnapshot_Data[i][eSnapshot_Object] == object) {
+                    if(gSnapshot_Object[i] == object) {
                         CallLocalFunction("Snapshot_OnPlayerHit", "ii", playerid, i);
                         break;
                     }
